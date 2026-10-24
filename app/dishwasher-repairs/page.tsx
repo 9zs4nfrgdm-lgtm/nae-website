@@ -1,0 +1,5 @@
+import ApplianceServicePage from "@/components/appliance-service-page";
+
+export default function DishwasherRepairsPage() {
+  return <ApplianceServicePage eyebrow="Newcastle Dishwasher Repairs" title="Dishwasher repairs across Newcastle." intro="Practical fault diagnosis and repair for household dishwashers across Newcastle and Lake Macquarie." serviceName="Dishwasher" faults={["Not draining or water left in the base", "Not filling or starting a cycle", "Leaking water", "Dishes not cleaning properly", "Not heating or drying effectively", "Unusual pump or wash noises", "Door, latch or control problems", "Cycle stopping or an error code"]} details={[{title:"Brand and model",text:"Photograph the complete rating label, commonly found around the door edge or frame."},{title:"Fault description",text:"Explain when the issue occurs and whether water remains, leaks or any unusual sound is present."},{title:"Displayed information",text:"Include the exact error code or indicator pattern without treating it as a confirmed diagnosis."},{title:"Useful photos",text:"A photo of the label, controls and any visible leak location can provide helpful context."}]} />;
+}
