@@ -54,3 +54,18 @@ set when running `npm run dev`; remove that override before a production build.
 Run `npx tsc --noEmit --incremental false` and `npm run lint` for checks.
 In environments where Turbopack process creation is restricted, the verified
 production build command is `npx next build --webpack`.
+
+## Online repair submissions
+
+Both repair forms submit to the same-origin Cloudflare Pages Function
+at `/api/repair-submissions`. Deploy the repository with the root
+`functions/` directory and the existing `out` static build output.
+
+Set `RESEND_API_KEY` as a Cloudflare Pages secret and `REPAIR_FROM_EMAIL`
+to an address on a verified sending domain. Requests go to the existing
+service inbox, with the customer's address set as Reply-To. Set and
+test these values in protected staging before enabling the production
+form. Configure Cloudflare rate limiting for POST requests to this
+endpoint before launch, and verify that a sample submission and its
+attachments reach the service inbox. A static-only preview does not
+run the Pages Function.

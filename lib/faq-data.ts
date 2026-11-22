@@ -4,7 +4,7 @@ export const faqItems = [
   {
     question: "How do I register a De’Longhi repair?",
     answer:
-      `Use the dedicated De’Longhi repair registration, then send the prepared email with your proof of purchase and relevant product documents or photos attached. Once the email is sent, you can drop off the product at ${workshopDetails.address}, ${workshopDetails.hours}, without calling, making an appointment or waiting for the confirmation and job number. Newcastle Appliance Experts will email the confirmation and job number within a few hours during business hours, or the next business day if the registration is received outside business hours.`,
+      `Submit the dedicated De’Longhi repair registration with any proof of purchase or relevant documents or photos. Once the registration is submitted, you can drop off the product at ${workshopDetails.address}, ${workshopDetails.hours}, without calling, making an appointment or waiting for the confirmation and job number. Newcastle Appliance Experts will email the confirmation and job number within a few hours during business hours, or the next business day if the registration is received outside business hours.`,
   },
   {
     question: "What appliances do you currently repair?",

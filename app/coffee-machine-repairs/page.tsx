@@ -59,7 +59,7 @@ export default function CoffeeMachineRepairsPage() {
               {[
                 ["Product type", "Tell us whether the machine is manual espresso, automatic / bean-to-cup or another De’Longhi product."],
                 ["Model and serial", "Record the complete details from the product identification label."],
-                ["Warranty context", "Choose warranty, out-of-warranty or not sure, and attach proof of purchase to your email if available."],
+                ["Warranty context", "Choose warranty, out-of-warranty or not sure, and upload proof of purchase if available."],
                 ["Fault symptoms", "Describe what happens, when it occurs and any error message shown."],
               ].map(([title, text]) => <article key={title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6"><h3 className="text-xl font-bold">{title}</h3><p className="mt-2 leading-7 text-slate-600">{text}</p></article>)}
             </div>
@@ -82,7 +82,7 @@ export default function CoffeeMachineRepairsPage() {
         <div className="mx-auto max-w-5xl px-6 text-center lg:px-8">
           <div className="text-sm font-bold uppercase tracking-[0.2em] text-sky-400">Authorised De’Longhi Service</div>
           <h2 className="mt-4 text-4xl font-bold tracking-tight">Register your De’Longhi coffee machine repair.</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">Use the dedicated registration for warranty, out-of-warranty or not-sure De’Longhi repairs. Once the prepared email is sent, you can drop off the product at {workshopDetails.address}, {workshopDetails.hours}, without an appointment or waiting for a job number.</p>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">Use the dedicated registration for warranty, out-of-warranty or not-sure De’Longhi repairs. Once your registration is submitted, you can drop off the product at {workshopDetails.address}, {workshopDetails.hours}, without an appointment or waiting for a job number.</p>
           <Link href="/brands/delonghi#delonghi-service-form" className="mt-8 inline-block rounded-full bg-white px-8 py-4 font-semibold text-slate-950 transition hover:bg-sky-50">Register a De’Longhi Repair</Link>
         </div>
       </section>

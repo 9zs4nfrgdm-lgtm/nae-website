@@ -6,6 +6,15 @@ type SiteFooterProps = {
   showNavigation?: boolean;
 };
 
+function LegalLinks() {
+  return (
+    <nav aria-label="Legal" className="flex flex-wrap gap-x-5 gap-y-2">
+      <Link className="underline underline-offset-4" href="/privacy-policy">Privacy Policy</Link>
+      <Link className="underline underline-offset-4" href="/terms-and-conditions">Terms &amp; Conditions</Link>
+    </nav>
+  );
+}
+
 export default function SiteFooter({
   variant = "dark",
   showNavigation = false,
@@ -28,14 +37,17 @@ export default function SiteFooter({
               </a>
             </div>
           </div>
-          {showNavigation && (
-            <div className="flex flex-wrap gap-5">
-              <Link href="/brands">Brands</Link>
-              <Link href="/service-areas">Service Areas</Link>
-              <Link href="/about">About</Link>
-              <Link href="/faq">FAQ</Link>
-            </div>
-          )}
+          <div className="space-y-3">
+            {showNavigation && (
+              <div className="flex flex-wrap gap-5">
+                <Link href="/brands">Brands</Link>
+                <Link href="/service-areas">Service Areas</Link>
+                <Link href="/about">About</Link>
+                <Link href="/faq">FAQ</Link>
+              </div>
+            )}
+            <LegalLinks />
+          </div>
         </div>
       </footer>
     );
@@ -63,8 +75,9 @@ export default function SiteFooter({
             </a>
           </div>
         </div>
-        <div className="mt-10 border-t border-slate-800 pt-6 text-sm text-slate-500">
-          © 2026 Newcastle Appliance Experts. All rights reserved.
+        <div className="mt-10 flex flex-wrap justify-between gap-4 border-t border-slate-800 pt-6 text-sm text-slate-400">
+          <p>© 2026 Newcastle Appliance Experts. All rights reserved.</p>
+          <LegalLinks />
         </div>
       </div>
     </footer>

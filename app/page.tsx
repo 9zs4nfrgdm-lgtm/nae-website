@@ -269,7 +269,7 @@ export default function Home() {
           <div>
             <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Authorised De’Longhi repairs and servicing.</h2>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Newcastle Appliance Experts is a De’Longhi Authorised Service Centre, providing authorised repairs and servicing for De’Longhi products across Newcastle and Lake Macquarie.</p>
-            <p className="mt-3 max-w-3xl leading-7 text-slate-600">Register the repair online, send the prepared email and documents, then drop off the product during business hours without an appointment or waiting for a job number.</p>
+            <p className="mt-3 max-w-3xl leading-7 text-slate-600">Submit the repair registration with any supporting documents, then drop off the product during business hours without an appointment or waiting for a job number.</p>
             <Link href="/brands/delonghi" className="mt-7 inline-block font-semibold text-sky-700 transition hover:text-sky-900">Register a De’Longhi Repair →</Link>
           </div>
         </div>

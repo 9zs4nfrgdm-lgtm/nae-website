@@ -2,14 +2,13 @@
 
 import MobileNavigation from "@/components/mobile-navigation";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { AttachmentInput, useRepairSubmission } from "@/components/repair-submission";
 import SiteFooter from "@/components/site-footer";
 import { supportedBrandNames } from "@/lib/brand-repair-data";
 import {
   contactDetails,
-  createRepairEnquiryEmailHref,
-  type RepairEnquiryDetails,
 } from "@/lib/contact";
 
 const applianceTypes = [
@@ -32,38 +31,9 @@ function Optional() {
 }
 
 export default function RequestARepairPage() {
-  const [submitMessage, setSubmitMessage] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-
-    const formData = new FormData(form);
-    const value = (name: string) => String(formData.get(name) ?? "").trim();
-    const enquiry: RepairEnquiryDetails = {
-      customerName: value("customerName"),
-      mobile: value("mobile"),
-      customerEmail: value("email"),
-      suburb: value("suburb"),
-      streetAddress: value("streetAddress"),
-      applianceType: value("applianceType"),
-      brand: value("brand"),
-      modelNumber: value("modelNumber"),
-      serialNumber: value("serialNumber"),
-      productCode: value("productCode"),
-      approximateAge: value("approximateAge"),
-      errorCode: value("errorCode"),
-      faultDescription: value("faultDescription"),
-      faultStarted: value("faultStarted"),
-      alreadyTried: value("alreadyTried"),
-    };
-
-    setSubmitMessage(
-      "Your email app should open with your repair details. Nothing has been sent yet. Review the email, manually attach any useful photos, then send it from your email app.",
-    );
-    window.location.href = createRepairEnquiryEmailHref(enquiry);
-  }
+  const { handleSubmit, message: submitMessage, pending, sent } = useRepairSubmission("repair", "Your repair enquiry has been sent. We’ll be in touch to discuss the next steps.", () => setSelectedBrand(""));
 
   return (
     <main className="min-h-screen bg-white text-slate-950">
@@ -117,7 +87,7 @@ export default function RequestARepairPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
           <div className="mb-8 rounded-2xl border border-sky-200 bg-sky-50 px-5 py-4 text-sm leading-6 text-sky-950">
-            <span className="font-semibold">How submission works:</span> the form opens a prepared message in your email app. Review it and press Send there. Photos cannot be attached automatically, so you will need to attach them to the email yourself.
+            <span className="font-semibold">How submission works:</span> Send your repair details and any photos directly through this form.
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-10" noValidate={false}>
@@ -160,14 +130,12 @@ export default function RequestARepairPage() {
                 <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-sky-500" />
                 <span>I consent to Newcastle Appliance Experts using the information I provide to respond to this repair enquiry and arrange service. Please do not include sensitive personal information. *</span>
               </label>
-              <p className="mt-5 text-sm leading-6 text-slate-300">
-                After you submit this form, your email app will open with your repair details filled in. Before sending, please attach a clear photo of the appliance model/serial label and any other photos or videos that may help us prepare for the appropriate service.
-              </p>
-              <button type="submit" className="mt-6 rounded-full bg-sky-600 px-8 py-4 font-semibold text-white transition hover:bg-sky-500">
-                Submit Repair Enquiry
+              <AttachmentInput />
+              <button type="submit" disabled={pending} className="mt-6 rounded-full bg-sky-600 px-8 py-4 font-semibold text-white transition hover:bg-sky-500 disabled:opacity-60">
+                {pending ? "Sending…" : "Submit Repair Enquiry"}
               </button>
               {submitMessage && (
-                <div role="alert" className="mt-6 rounded-2xl border border-amber-400/40 bg-amber-300/10 p-5 text-sm leading-6 text-amber-100">
+                <div role={sent ? "status" : "alert"} className="mt-6 rounded-2xl border border-amber-400/40 bg-amber-300/10 p-5 text-sm leading-6 text-amber-100">
                   <p>{submitMessage}</p>
                   <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:gap-5">
                     <a href={contactDetails.phoneHref} className="font-semibold text-white underline">Call {contactDetails.phoneDisplay}</a>
