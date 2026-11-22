@@ -425,6 +425,8 @@ export function getBrandRepairPage(slug: string): BrandRepairData | undefined {
 
 export const supportedBrandNames = [
   "De’Longhi",
+  "Kenwood",
+  "Braun",
   "LG",
   ...brandRepairPages.map(({ name }) => name),
 ] as const;

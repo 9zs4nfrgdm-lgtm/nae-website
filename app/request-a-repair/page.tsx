@@ -20,6 +20,9 @@ const applianceTypes = [
   "Oven",
   "Cooktop",
   "Microwave",
+  "Stand Mixer",
+  "Hand Blender",
+  "Other Small Appliance",
 ] as const;
 
 const inputClass =
@@ -69,7 +72,7 @@ export default function RequestARepairPage() {
           </div>
 
           <form method="post" action="/api/repair-submissions" encType="multipart/form-data" onSubmit={handleSubmit} className="space-y-10" noValidate={false}>
-            <fieldset className="rounded-3xl border border-slate-200 p-6 sm:p-8">
+            <fieldset id="appliance-details" className="scroll-mt-40 rounded-3xl border border-slate-200 p-6 sm:p-8">
               <legend className="px-2 text-2xl font-bold">Appliance details</legend>
               <p className="mt-3 text-sm leading-6 text-slate-600">A photo of the identification label is often the easiest way to capture model and product details accurately. These details help with preparation but may not identify the underlying fault without inspection and testing.</p>
               <div className="mt-6 grid gap-6 sm:grid-cols-2">

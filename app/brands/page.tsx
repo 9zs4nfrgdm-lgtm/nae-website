@@ -26,18 +26,18 @@ const authorisedBrands = [
     logo: "kenwood-logo.webp",
     product: "kenwood-titanium-chef-baker.webp",
     alt: "Kenwood Titanium Chef Baker stand mixer",
-    description: "Call with your Kenwood model number to confirm service options.",
-    href: contactDetails.phoneHref,
-    action: "Call about a Kenwood repair",
+    description: "Tell us your Kenwood model and what needs repairing.",
+    href: "/request-a-repair#appliance-details",
+    action: "Lodge a Kenwood repair enquiry",
   },
   {
     name: "Braun",
     logo: "braun-logo.webp",
     product: "braun-multiquick-7.webp",
     alt: "Braun MultiQuick 7 hand blender with attachments",
-    description: "Call with your Braun household appliance model number to confirm service options.",
-    href: contactDetails.phoneHref,
-    action: "Call about a Braun repair",
+    description: "Tell us your Braun household appliance model and what needs repairing.",
+    href: "/request-a-repair#appliance-details",
+    action: "Lodge a Braun repair enquiry",
   },
 ];
 
@@ -191,6 +191,9 @@ export default function BrandsPage() {
                 </article>
               ))}
             </div>
+            <p className="mt-5 text-sm text-slate-600">
+              Prefer to talk? <a href={contactDetails.phoneHref} className="font-semibold text-sky-700 underline underline-offset-4">Call {contactDetails.phoneDisplay}</a>.
+            </p>
           </section>
           <div className="max-w-3xl">
             <div className="text-sm font-bold uppercase tracking-[0.2em] text-sky-600">
