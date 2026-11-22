@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { contactDetails } from "@/lib/contact";
 import JsonLd from "@/components/json-ld";
 import { absoluteUrl } from "@/lib/seo";
 import { pageJsonLd } from "@/lib/structured-data";
@@ -8,6 +10,36 @@ import SiteFooter from "@/components/site-footer";
 const title = "Appliance Brands We Repair";
 const description = "View household appliance brands serviced by Newcastle Appliance Experts across Newcastle and Lake Macquarie.";
 const path = "/brands";
+
+const authorisedBrands = [
+  {
+    name: "De’Longhi",
+    logo: "delonghi-logo.webp",
+    product: "delonghi-eletta-ultra.webp",
+    alt: "De’Longhi Eletta Ultra coffee machine",
+    description: "Register a repair for a coffee machine or other eligible De’Longhi product.",
+    href: "/brands/delonghi#delonghi-service-form",
+    action: "Register a De’Longhi repair",
+  },
+  {
+    name: "Kenwood",
+    logo: "kenwood-logo.webp",
+    product: "kenwood-titanium-chef-baker.webp",
+    alt: "Kenwood Titanium Chef Baker stand mixer",
+    description: "Call with your Kenwood model number to confirm service options.",
+    href: contactDetails.phoneHref,
+    action: "Call about a Kenwood repair",
+  },
+  {
+    name: "Braun",
+    logo: "braun-logo.webp",
+    product: "braun-multiquick-7.webp",
+    alt: "Braun MultiQuick 7 hand blender with attachments",
+    description: "Call with your Braun household appliance model number to confirm service options.",
+    href: contactDetails.phoneHref,
+    action: "Call about a Braun repair",
+  },
+];
 
 const brands = [
   "LG",
@@ -144,10 +176,22 @@ export default function BrandsPage() {
       {/* BRAND GRID */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <Link href="/brands/delonghi" className="mb-12 grid gap-6 rounded-[2rem] border border-sky-200 bg-sky-50 p-7 transition hover:border-sky-400 hover:shadow-lg sm:p-9 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
-            <div className="inline-flex w-fit rounded-full border border-sky-200 bg-white px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-sky-700">Authorised Service Centre</div>
-            <div><h2 className="text-3xl font-bold">De’Longhi</h2><p className="mt-3 leading-7 text-slate-600">Newcastle Appliance Experts is a De’Longhi Authorised Service Centre for De’Longhi products, including manual espresso and automatic coffee machines. Register online, send your documents, then drop off during business hours without waiting for a job number.</p><span className="mt-5 inline-block font-semibold text-sky-700">Register a De’Longhi Repair →</span></div>
-          </Link>
+          <section aria-labelledby="authorised-brands" className="mb-16">
+            <h2 id="authorised-brands" className="text-4xl font-bold tracking-tight">Authorised service brands</h2>
+            <div className="mt-7 grid gap-5 md:grid-cols-3">
+              {authorisedBrands.map(({ name, logo, product, alt, description, href, action }) => (
+                <article key={name} className="flex min-w-0 flex-col rounded-3xl border border-slate-200 bg-white p-6">
+                  <h3 className="flex h-10 items-center">
+                    <span className="sr-only">{name}</span>
+                    <Image src={`/brand-art/${logo}`} alt="" width={160} height={40} unoptimized className="h-full w-auto max-w-36 object-contain" />
+                  </h3>
+                  <Image src={`/brand-art/${product}`} alt={alt} width={320} height={320} unoptimized className="mt-4 h-48 w-full object-contain" />
+                  <p className="mt-3 flex-1 leading-7 text-slate-600">{description}</p>
+                  <Link href={href} className="mt-4 inline-block font-semibold text-sky-700 underline underline-offset-4">{action}</Link>
+                </article>
+              ))}
+            </div>
+          </section>
           <div className="max-w-3xl">
             <div className="text-sm font-bold uppercase tracking-[0.2em] text-sky-600">
               Supported Manufacturers

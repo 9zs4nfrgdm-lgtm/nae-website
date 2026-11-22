@@ -2,6 +2,7 @@
 
 import MobileNavigation from "@/components/mobile-navigation";
 
+import Image from "next/image";
 import Link from "next/link";
 import { AttachmentInput, useRepairSubmission } from "@/components/repair-submission";
 import SiteFooter from "@/components/site-footer";
@@ -51,7 +52,7 @@ export default function DelonghiPage() {
 
       <section className="relative overflow-hidden bg-slate-950 text-white">
         <div className="absolute right-[-180px] top-[-180px] h-[540px] w-[540px] rounded-full bg-sky-700/30 blur-3xl" />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-9 px-6 py-20 lg:grid-cols-[1.3fr_1fr] lg:px-8 lg:py-28">
           <div className="max-w-4xl">
             <div className="inline-flex rounded-full border border-sky-400/40 bg-sky-400/10 px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-sky-300">
               Authorised De’Longhi Repairs &amp; Servicing
@@ -66,6 +67,16 @@ export default function DelonghiPage() {
               <a href="#delonghi-service-form" className="rounded-full bg-sky-600 px-7 py-4 font-semibold text-white transition hover:bg-sky-500 disabled:opacity-60">Register Your De’Longhi Repair</a>
               <Link href="/coffee-machine-repairs" className="rounded-full border border-slate-600 px-7 py-4 font-semibold transition hover:border-sky-400">Coffee Machine Repairs</Link>
             </div>
+          </div>
+          <div className="overflow-hidden rounded-3xl bg-white">
+            <Image
+              src="/brand-art/delonghi-eletta-ultra.webp"
+              alt="De’Longhi Eletta Ultra coffee machine"
+              width={900}
+              height={900}
+              unoptimized
+              className="h-auto w-full"
+            />
           </div>
         </div>
       </section>
