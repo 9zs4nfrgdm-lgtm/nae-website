@@ -17,7 +17,7 @@ const subscribeToHydration = () => () => {};
 const clientIsReady = () => true;
 const serverIsReady = () => false;
 
-export function useRepairSubmission(kind: "repair" | "manufacturer", successMessage: string, onSuccess?: () => void) {
+export function useRepairSubmission(kind: "repair" | "manufacturer", successMessage: string) {
   const [message, setMessage] = useState("");
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -55,7 +55,6 @@ export function useRepairSubmission(kind: "repair" | "manufacturer", successMess
         return;
       }
       form.reset();
-      onSuccess?.();
       setSent(true);
       setMessage(successMessage);
     } catch {

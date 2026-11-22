@@ -2,7 +2,7 @@
 
 import SiteHeader from "@/components/site-header";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AttachmentInput, useRepairSubmission } from "@/components/repair-submission";
 import SiteFooter from "@/components/site-footer";
@@ -30,10 +30,12 @@ function Optional() {
   return <span className="font-normal text-slate-500"> (optional)</span>;
 }
 
-export default function RequestARepairPage() {
-  const [selectedBrand, setSelectedBrand] = useState("");
+const delonghiRegistration = "/brands/delonghi#delonghi-service-form";
 
-  const { handleSubmit, message: submitMessage, pending, sent, ready } = useRepairSubmission("repair", "Your repair enquiry has been sent. We’ll be in touch to discuss the next steps.", () => setSelectedBrand(""));
+export default function RequestARepairPage() {
+  const router = useRouter();
+
+  const { handleSubmit, message: submitMessage, pending, sent, ready } = useRepairSubmission("repair", "Your repair enquiry has been sent. We’ll be in touch to discuss the next steps.");
 
   return (
     <main className="min-h-screen bg-white text-slate-950">
@@ -63,10 +65,45 @@ export default function RequestARepairPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
           <div className="mb-8 rounded-2xl border border-sky-200 bg-sky-50 px-5 py-4 text-sm leading-6 text-sky-950">
-            <span className="font-semibold">How submission works:</span> Send your repair details and any photos directly through this form.
+            For De’Longhi repairs, you can go straight to the <Link href={delonghiRegistration} className="font-semibold underline">De’Longhi registration form</Link>.
           </div>
 
           <form method="post" action="/api/repair-submissions" encType="multipart/form-data" onSubmit={handleSubmit} className="space-y-10" noValidate={false}>
+            <fieldset className="rounded-3xl border border-slate-200 p-6 sm:p-8">
+              <legend className="px-2 text-2xl font-bold">Appliance details</legend>
+              <p className="mt-3 text-sm leading-6 text-slate-600">A photo of the identification label is often the easiest way to capture model and product details accurately. These details help with preparation but may not identify the underlying fault without inspection and testing.</p>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <label className={labelClass}>Appliance type *<select name="applianceType" required defaultValue="" className={inputClass}><option value="" disabled>Select an appliance</option>{applianceTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
+                <label className={labelClass}>
+                  Brand *
+                  <select
+                    name="brand"
+                    required
+                    defaultValue=""
+                    aria-describedby="brand-routing-help"
+                    className={inputClass}
+                    onChange={(event) => {
+                      if (event.currentTarget.value === "De’Longhi") {
+                        event.currentTarget.value = "";
+                        router.push(delonghiRegistration);
+                      }
+                    }}
+                  >
+                    <option value="" disabled>Select a brand</option>
+                    {supportedBrandNames.map((brand) => <option key={brand}>{brand}</option>)}
+                    <option>Other / Brand not listed</option>
+                  </select>
+                  <span id="brand-routing-help" className="mt-2 block font-normal text-slate-600">
+                    Choosing De’Longhi opens its dedicated repair form.
+                  </span>
+                </label>
+                <label className={labelClass}>Model number<Optional /><input name="modelNumber" className={inputClass} /></label>
+                <label className={labelClass}>Serial number<Optional /><input name="serialNumber" className={inputClass} /></label>
+                <label className={labelClass}>Variant / PNC / product code<Optional /><input name="productCode" className={inputClass} /></label>
+                <label className={labelClass}>Approximate age<Optional /><input name="approximateAge" placeholder="For example, 5 years" className={inputClass} /></label>
+              </div>
+            </fieldset>
+
             <fieldset className="rounded-3xl border border-slate-200 p-6 sm:p-8">
               <legend className="px-2 text-2xl font-bold">Your contact details</legend>
               <div className="mt-3 grid gap-6 sm:grid-cols-2">
@@ -75,20 +112,6 @@ export default function RequestARepairPage() {
                 <label className={labelClass}>Email address *<input name="email" type="email" required autoComplete="email" className={inputClass} /></label>
                 <label className={labelClass}>Suburb *<input name="suburb" required autoComplete="address-level2" className={inputClass} /></label>
                 <label className={`${labelClass} sm:col-span-2`}>Street address<Optional /><input name="streetAddress" autoComplete="street-address" className={inputClass} /></label>
-              </div>
-            </fieldset>
-
-            <fieldset className="rounded-3xl border border-slate-200 p-6 sm:p-8">
-              <legend className="px-2 text-2xl font-bold">Appliance details</legend>
-              <p className="mt-3 text-sm leading-6 text-slate-600">A photo of the identification label is often the easiest way to capture model and product details accurately. These details help with preparation but may not identify the underlying fault without inspection and testing.</p>
-              <div className="mt-6 grid gap-6 sm:grid-cols-2">
-                <label className={labelClass}>Appliance type *<select name="applianceType" required defaultValue="" className={inputClass}><option value="" disabled>Select an appliance</option>{applianceTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
-                <label className={labelClass}>Brand *<select name="brand" required value={selectedBrand} onChange={(event) => setSelectedBrand(event.target.value)} className={inputClass}><option value="" disabled>Select a brand</option>{supportedBrandNames.map((brand) => <option key={brand}>{brand}</option>)}<option>Other / Brand not listed</option></select></label>
-                {selectedBrand === "De’Longhi" && <p role="status" className="sm:col-span-2 rounded-xl bg-sky-50 p-3 font-normal leading-6 text-slate-700">For authorised De’Longhi service, use the <Link href="/brands/delonghi#delonghi-service-form" className="font-semibold text-sky-700 underline">dedicated De’Longhi service form</Link>.</p>}
-                <label className={labelClass}>Model number<Optional /><input name="modelNumber" className={inputClass} /></label>
-                <label className={labelClass}>Serial number<Optional /><input name="serialNumber" className={inputClass} /></label>
-                <label className={labelClass}>Variant / PNC / product code<Optional /><input name="productCode" className={inputClass} /></label>
-                <label className={labelClass}>Approximate age<Optional /><input name="approximateAge" placeholder="For example, 5 years" className={inputClass} /></label>
               </div>
             </fieldset>
 

@@ -123,6 +123,15 @@ export default function DelonghiPage() {
 
           <form method="post" action="/api/repair-submissions" encType="multipart/form-data" onSubmit={handleSubmit} className="mt-10 space-y-8">
             <fieldset className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+              <legend className="px-2 text-2xl font-bold">Product details</legend>
+              <div className="mt-3 grid gap-6 sm:grid-cols-2">
+                <label className={labelClass}>De’Longhi product type *<select name="productType" required defaultValue="" className={inputClass}><option value="" disabled>Select a product type</option>{productTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
+                <label className={labelClass}>Model number *<input name="modelNumber" required className={inputClass} /></label>
+                <label className={labelClass}>Serial number<Optional /><input name="serialNumber" className={inputClass} /></label>
+              </div>
+            </fieldset>
+
+            <fieldset className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
               <legend className="px-2 text-2xl font-bold">Customer details</legend>
               <div className="mt-3 grid gap-6 sm:grid-cols-2">
                 <label className={labelClass}>Customer name *<input name="customerName" required autoComplete="name" className={inputClass} /></label>
@@ -130,15 +139,6 @@ export default function DelonghiPage() {
                 <label className={labelClass}>Email address *<input name="email" required type="email" autoComplete="email" className={inputClass} /></label>
                 <label className={labelClass}>Suburb *<input name="suburb" required autoComplete="address-level2" className={inputClass} /></label>
                 <label className={`${labelClass} sm:col-span-2`}>Street address<Optional /><input name="streetAddress" autoComplete="street-address" className={inputClass} /></label>
-              </div>
-            </fieldset>
-
-            <fieldset className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-              <legend className="px-2 text-2xl font-bold">Product details</legend>
-              <div className="mt-3 grid gap-6 sm:grid-cols-2">
-                <label className={labelClass}>De’Longhi product type *<select name="productType" required defaultValue="" className={inputClass}><option value="" disabled>Select a product type</option>{productTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
-                <label className={labelClass}>Model number *<input name="modelNumber" required className={inputClass} /></label>
-                <label className={labelClass}>Serial number<Optional /><input name="serialNumber" className={inputClass} /></label>
               </div>
             </fieldset>
 
