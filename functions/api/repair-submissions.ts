@@ -114,7 +114,14 @@ export async function onRequestPost({ request, env }: Context) {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: env.REPAIR_FROM_EMAIL, to: [contactDetails.email], reply_to: email, subject, text, attachments }),
+      body: JSON.stringify({
+        from: env.REPAIR_FROM_EMAIL,
+        to: [contactDetails.email],
+        reply_to: email,
+        subject,
+        text,
+        ...(attachments.length > 0 && { attachments }),
+      }),
       signal: AbortSignal.timeout(15000),
     });
     if (response.ok) return Response.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });

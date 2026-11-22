@@ -40,6 +40,9 @@ export function useRepairSubmission(kind: "repair" | "manufacturer", successMess
       return;
     }
 
+    // FormData includes an empty part when no file is selected.
+    data.delete("attachments");
+    for (const file of files) data.append("attachments", file);
     data.set("kind", kind);
     inFlight.current = true;
     setPending(true);
