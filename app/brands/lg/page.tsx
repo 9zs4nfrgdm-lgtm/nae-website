@@ -38,7 +38,7 @@ export default function LgRepairsPage() {
             href="/request-a-repair"
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-600"
           >
-            Book a Repair
+            Request a Repair
           </Link>
           <MobileNavigation />
         </div>

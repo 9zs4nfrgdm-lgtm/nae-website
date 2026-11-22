@@ -110,7 +110,7 @@ export default function ServiceAreasPage() {
             href="/request-a-repair"
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-600"
           >
-            Book a Repair
+            Request a Repair
           </Link>
           <MobileNavigation />
         </div>
@@ -141,7 +141,7 @@ export default function ServiceAreasPage() {
                 href="/request-a-repair"
                 className="rounded-full bg-sky-600 px-7 py-4 font-semibold text-white shadow-lg shadow-sky-600/20 transition hover:bg-sky-700"
               >
-                Book a Repair
+                Request a Repair
               </Link>
               <a
                 href="#suburbs"

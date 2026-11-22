@@ -1,71 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Newcastle Appliance Experts website
 
-## Getting Started
+The site uses a Next.js static export and a Cloudflare Pages Function for online repair intake.
 
-First, run the development server:
+## Build and check
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Use the same Node.js version as the Pages build environment.
+
+```sh
+npm ci
+npm run lint
+npx next typegen
+npx tsc --noEmit --incremental false
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The build writes to `out/`. Serve that directory with a static server for
+page-only checks. To test the forms, run a Pages-compatible preview from
+the repository root with the `functions/` directory available.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Set `NEXT_PUBLIC_SITE_URL=https://newcastleapplianceexperts.com.au`
+in the build environment. This is also the default. Keep staging access
+restricted even though staging HTML uses the public canonical domain.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cloudflare Pages
 
-## Learn More
+Use the `nae-website` Pages project. For Git-integrated builds, use
+`npm run build`, the repository root, and `out` as the output directory.
+Use the Git integration or a supported Wrangler deployment from the
+repository root so Cloudflare includes `functions/api/repair-submissions.ts`.
+Uploading only `out` through the dashboard does not deploy the Function.
 
-To learn more about Next.js, take a look at the following resources:
+In each environment that accepts submissions, set `RESEND_API_KEY`
+as a Pages secret and `REPAIR_FROM_EMAIL` to a verified sender.
+Keep preview and production credentials separate. Requests are sent to
+the service inbox with the customer's email as Reply-To. Apply production
+rate limiting to POST requests at `/api/repair-submissions`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-## Production website URL
-
-Set this environment variable in the deployment environment **before building**:
-
-```text
-NEXT_PUBLIC_SITE_URL=https://newcastleapplianceexperts.com.au
-```
-
-The application defaults to this confirmed public domain when the variable is
-absent. Production builds reject any other origin, including localhost and
-Vercel preview hostnames, rather than emitting incorrect public SEO metadata.
-Vercel hostname environment variables are deliberately not used for SEO.
-For local development only, `NEXT_PUBLIC_SITE_URL=http://localhost:3000` may be
-set when running `npm run dev`; remove that override before a production build.
-
-Run `npx tsc --noEmit --incremental false` and `npm run lint` for checks.
-In environments where Turbopack process creation is restricted, the verified
-production build command is `npx next build --webpack`.
-
-## Online repair submissions
-
-Both repair forms submit to the same-origin Cloudflare Pages Function
-at `/api/repair-submissions`. Deploy the repository with the root
-`functions/` directory and the existing `out` static build output.
-
-Set `RESEND_API_KEY` as a Cloudflare Pages secret and `REPAIR_FROM_EMAIL`
-to an address on a verified sending domain. Requests go to the existing
-service inbox, with the customer's address set as Reply-To. Set and
-test these values in protected staging before enabling the production
-form. Configure Cloudflare rate limiting for POST requests to this
-endpoint before launch, and verify that a sample submission and its
-attachments reach the service inbox. A static-only preview does not
-run the Pages Function.
+Before switching traffic, record the release commit and last working
+production deployment for rollback. Verify HTTPS and the canonical host,
+then test both forms and open the sample attachments in the service inbox.
+Verify signed-out access separately for the base Pages address, each
+preview alias and historical deployment URLs. Confirm staging sign-in still works.

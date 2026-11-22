@@ -18,12 +18,12 @@ export default function PrivacyPolicy() {
       <section>
         <h2>Information you provide</h2>
         <p>We may receive your name, phone number, email address, suburb and service address, along with the appliance type, model, serial number and fault details. Repair registrations may also include purchase details, proof of purchase and a manufacturer or service reference number. You may send photos, videos or documents to help us assess the job.</p>
-        <p>When you submit a repair enquiry or registration on our website, we receive your details and any photos or documents you upload through the form. Please share only what we need for the job.</p>
+        <p>When you submit a repair enquiry or registration on our website, we receive your details and any photos or documents you upload through the form. Please share only what we need for the job. If you upload proof of purchase, cover any payment card or other unrelated information first.</p>
       </section>
       <section>
         <h2>How we use and share information</h2>
         <p>We use the details you send to respond to your enquiry, recommend the right service, arrange a workshop repair or home visit, and keep you updated. We also use them to prepare quotes, handle warranty requests and keep a record of the job. We may share relevant personal information with third-party partners, manufacturers and service providers, including providers of AI tools, to help us assess repairs, arrange service, process warranty claims and manage repair enquiries and jobs.</p>
-        <p>We use Gmail to receive and manage service emails and attachments.</p>
+        <p>Cloudflare hosts the website and processes online repair forms. Resend delivers the repair details and attachments to our service inbox, which we manage using Gmail. These providers may process information outside Australia.</p>
       </section>
       <section>
         <h2>Website analytics and tracking</h2>

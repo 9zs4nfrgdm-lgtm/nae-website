@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import { attachmentHelp, attachmentTypes, maxAttachments, maxAttachmentBytes } from "@/lib/repair-submission";
 
 export function AttachmentInput() {
@@ -13,15 +13,20 @@ export function AttachmentInput() {
   );
 }
 
+const subscribeToHydration = () => () => {};
+const clientIsReady = () => true;
+const serverIsReady = () => false;
+
 export function useRepairSubmission(kind: "repair" | "manufacturer", successMessage: string, onSuccess?: () => void) {
   const [message, setMessage] = useState("");
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
+  const ready = useSyncExternalStore(subscribeToHydration, clientIsReady, serverIsReady);
   const inFlight = useRef(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (inFlight.current) return;
+    if (!ready || inFlight.current) return;
     const form = event.currentTarget;
     const data = new FormData(form);
     const files = data.getAll("attachments").filter((value): value is File => value instanceof File && value.name !== "");
@@ -58,5 +63,5 @@ export function useRepairSubmission(kind: "repair" | "manufacturer", successMess
     }
   }
 
-  return { handleSubmit, message, pending, sent };
+  return { handleSubmit, message, pending, sent, ready };
 }

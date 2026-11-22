@@ -40,7 +40,7 @@ export default function OtherBrandsPage() {
             <Link href="/about" className="transition hover:text-sky-600">About</Link>
             <Link href="/faq" className="transition hover:text-sky-600">FAQ</Link>
           </nav>
-          <Link href="/request-a-repair" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-600">Book a Repair</Link>
+          <Link href="/request-a-repair" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-600">Request a Repair</Link>
           <MobileNavigation />
         </div>
       </header>

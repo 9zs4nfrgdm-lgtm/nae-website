@@ -33,7 +33,7 @@ function Optional() {
 export default function RequestARepairPage() {
   const [selectedBrand, setSelectedBrand] = useState("");
 
-  const { handleSubmit, message: submitMessage, pending, sent } = useRepairSubmission("repair", "Your repair enquiry has been sent. We’ll be in touch to discuss the next steps.", () => setSelectedBrand(""));
+  const { handleSubmit, message: submitMessage, pending, sent, ready } = useRepairSubmission("repair", "Your repair enquiry has been sent. We’ll be in touch to discuss the next steps.", () => setSelectedBrand(""));
 
   return (
     <main className="min-h-screen bg-white text-slate-950">
@@ -90,7 +90,7 @@ export default function RequestARepairPage() {
             <span className="font-semibold">How submission works:</span> Send your repair details and any photos directly through this form.
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-10" noValidate={false}>
+          <form method="post" action="/api/repair-submissions" encType="multipart/form-data" onSubmit={handleSubmit} className="space-y-10" noValidate={false}>
             <fieldset className="rounded-3xl border border-slate-200 p-6 sm:p-8">
               <legend className="px-2 text-2xl font-bold">Your contact details</legend>
               <div className="mt-3 grid gap-6 sm:grid-cols-2">
@@ -107,7 +107,8 @@ export default function RequestARepairPage() {
               <p className="mt-3 text-sm leading-6 text-slate-600">A photo of the identification label is often the easiest way to capture model and product details accurately. These details help with preparation but may not identify the underlying fault without inspection and testing.</p>
               <div className="mt-6 grid gap-6 sm:grid-cols-2">
                 <label className={labelClass}>Appliance type *<select name="applianceType" required defaultValue="" className={inputClass}><option value="" disabled>Select an appliance</option>{applianceTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
-                <label className={labelClass}>Brand *<select name="brand" required value={selectedBrand} onChange={(event) => setSelectedBrand(event.target.value)} className={inputClass}><option value="" disabled>Select a brand</option>{supportedBrandNames.map((brand) => <option key={brand}>{brand}</option>)}<option>Other / Brand not listed</option></select>{selectedBrand === "De’Longhi" && <span className="mt-3 block rounded-xl bg-sky-50 p-3 font-normal leading-6 text-slate-700">For authorised De’Longhi service, use the <Link href="/brands/delonghi#delonghi-service-form" className="font-semibold text-sky-700 underline">dedicated De’Longhi service form</Link>.</span>}</label>
+                <label className={labelClass}>Brand *<select name="brand" required value={selectedBrand} onChange={(event) => setSelectedBrand(event.target.value)} className={inputClass}><option value="" disabled>Select a brand</option>{supportedBrandNames.map((brand) => <option key={brand}>{brand}</option>)}<option>Other / Brand not listed</option></select></label>
+                {selectedBrand === "De’Longhi" && <p role="status" className="sm:col-span-2 rounded-xl bg-sky-50 p-3 font-normal leading-6 text-slate-700">For authorised De’Longhi service, use the <Link href="/brands/delonghi#delonghi-service-form" className="font-semibold text-sky-700 underline">dedicated De’Longhi service form</Link>.</p>}
                 <label className={labelClass}>Model number<Optional /><input name="modelNumber" className={inputClass} /></label>
                 <label className={labelClass}>Serial number<Optional /><input name="serialNumber" className={inputClass} /></label>
                 <label className={labelClass}>Variant / PNC / product code<Optional /><input name="productCode" className={inputClass} /></label>
@@ -131,7 +132,12 @@ export default function RequestARepairPage() {
                 <span>I consent to Newcastle Appliance Experts using the information I provide to respond to this repair enquiry and arrange service. Please do not include sensitive personal information. *</span>
               </label>
               <AttachmentInput />
-              <button type="submit" disabled={pending} className="mt-6 rounded-full bg-sky-600 px-8 py-4 font-semibold text-white transition hover:bg-sky-500 disabled:opacity-60">
+              <p className="mt-4 text-sm leading-6 text-slate-300">
+                We use the details and files you send to handle your repair. Read our{" "}
+                <Link href="/privacy-policy" className="text-sky-300 underline">Privacy Policy</Link>.
+              </p>
+              <noscript><p className="mt-3 text-sm text-amber-200">Online submission requires JavaScript. Please call us to arrange service.</p></noscript>
+              <button type="submit" disabled={!ready || pending} className="mt-6 rounded-full bg-sky-600 px-8 py-4 font-semibold text-white transition hover:bg-sky-500 disabled:opacity-60">
                 {pending ? "Sending…" : "Submit Repair Enquiry"}
               </button>
               {submitMessage && (

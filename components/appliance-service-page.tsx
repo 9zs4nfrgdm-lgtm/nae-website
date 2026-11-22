@@ -41,7 +41,7 @@ export default function ApplianceServicePage({
           <Link href="/" aria-label="Newcastle Appliance Experts home">
             <img src="/nae-logo.png" alt="Newcastle Appliance Experts" className="h-20 w-auto object-contain" />
           </Link>
-          <Link href="/request-a-repair" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-600">Book a Repair</Link>
+          <Link href="/request-a-repair" className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-600">Request a Repair</Link>
           <MobileNavigation />
         </div>
       </header>
@@ -53,7 +53,7 @@ export default function ApplianceServicePage({
             <h1 className="text-5xl font-bold tracking-[-0.04em] sm:text-6xl">{title}</h1>
             <p className="mt-6 text-lg leading-8 text-slate-600">{intro}</p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/request-a-repair" className="rounded-full bg-sky-600 px-7 py-4 font-semibold text-white transition hover:bg-sky-700">Book a Repair</Link>
+              <Link href="/request-a-repair" className="rounded-full bg-sky-600 px-7 py-4 font-semibold text-white transition hover:bg-sky-700">Request a Repair</Link>
               <Link href="/service-areas" className="rounded-full border border-slate-300 px-7 py-4 font-semibold transition hover:border-slate-950">View Service Areas</Link>
             </div>
           </div>

@@ -25,7 +25,7 @@ const forms = {
 };
 
 function failure(message: string, status: number) {
-  return Response.json({ message }, { status });
+  return Response.json({ message }, { status, headers: { "Cache-Control": "no-store" } });
 }
 
 function signatureMatches(bytes: Uint8Array, type: string) {
@@ -50,8 +50,9 @@ export async function onRequestPost({ request, env }: Context) {
   if (!env.RESEND_API_KEY || !env.REPAIR_FROM_EMAIL) {
     return failure("Online delivery is unavailable. Please call us to arrange a repair.", 503);
   }
-  const length = Number(request.headers.get("content-length"));
-  if (!Number.isSafeInteger(length) || length < 1 || length > maxAttachmentBytes + 128 * 1024) {
+  const contentLength = request.headers.get("content-length");
+  const length = contentLength === null ? null : Number(contentLength);
+  if (length !== null && (!Number.isSafeInteger(length) || length < 1 || length > maxAttachmentBytes + 128 * 1024)) {
     return failure(attachmentHelp, 413);
   }
   if (!request.headers.get("content-type")?.startsWith("multipart/form-data;") || !request.body) {
@@ -116,7 +117,7 @@ export async function onRequestPost({ request, env }: Context) {
       body: JSON.stringify({ from: env.REPAIR_FROM_EMAIL, to: [contactDetails.email], reply_to: email, subject, text, attachments }),
       signal: AbortSignal.timeout(15000),
     });
-    if (response.ok) return Response.json({ ok: true });
+    if (response.ok) return Response.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     // Delivery could not be confirmed.
   }

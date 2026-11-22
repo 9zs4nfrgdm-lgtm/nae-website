@@ -6,7 +6,7 @@ import { businessId, pageJsonLd } from "@/lib/structured-data";
 
 const title = "De’Longhi Authorised Service Centre Newcastle";
 const description =
-  "Newcastle Appliance Experts is a De’Longhi Authorised Service Centre providing authorised repairs and servicing for all De’Longhi products.";
+  "Newcastle Appliance Experts is a De’Longhi Authorised Service Centre providing authorised repairs and servicing for eligible De’Longhi products.";
 const path = "/brands/delonghi";
 
 export const metadata: Metadata = createPageMetadata({

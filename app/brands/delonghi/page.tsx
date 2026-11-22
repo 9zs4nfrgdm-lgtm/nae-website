@@ -28,7 +28,7 @@ function Optional() {
 
 export default function DelonghiPage() {
 
-  const { handleSubmit, message: submitMessage, pending, sent } = useRepairSubmission("manufacturer", "Your repair registration has been sent. You can drop off your appliance during workshop hours without waiting for your job number.");
+  const { handleSubmit, message: submitMessage, pending, sent, ready } = useRepairSubmission("manufacturer", `Your repair registration has been sent. For a portable product suitable for workshop service, you can drop it off at ${workshopDetails.address}, ${workshopDetails.hours}, without waiting for your job number. Call us first if the product is large, installed or you are unsure.`);
 
   return (
     <main className="min-h-screen bg-white text-slate-950">
@@ -94,13 +94,13 @@ export default function DelonghiPage() {
             <h3 className="text-xl font-bold">Workshop drop-off</h3>
             <p className="mt-3">{workshopDetails.address}</p>
             <p className="mt-2">{workshopDetails.hours}</p>
-            <p className="mt-3 leading-7 text-slate-300">Once you have submitted your registration, you can drop off your product without an appointment or waiting for your job number.</p>
+            <p className="mt-3 leading-7 text-slate-300">After registration, you can drop off a portable product suitable for workshop service without an appointment or job number. Call first about large or installed products or if you are unsure.</p>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ["01", "Register your repair", "Provide your contact, product, purchase and fault details online."],
               ["02", "Send your details & documents", "Upload proof of purchase, a photo of the model/serial label or any other relevant files, then submit the form."],
-              ["03", "Drop off your product", `Once your registration has been submitted, bring your De’Longhi product to ${workshopDetails.address}, ${workshopDetails.hours}. No appointment or phone call is required, and there is no need to wait for a job number.`],
+              ["03", "Drop off your product", `After registration, bring your workshop-suitable De’Longhi product to ${workshopDetails.address}, ${workshopDetails.hours}. No appointment or phone call is required, and there is no need to wait for a job number.`],
               ["04", "Receive your job number", "Newcastle Appliance Experts will email your confirmation and job number within a few hours during business hours, or the next business day for registrations received outside business hours."],
             ].map(([number, title, text]) => (
               <article key={number} className="rounded-3xl border border-slate-800 bg-slate-900 p-7">
@@ -121,7 +121,7 @@ export default function DelonghiPage() {
             <p className="mt-5 text-lg leading-8 text-slate-600">Required fields are marked with an asterisk. Details supplied here help us prepare and do not replace inspection or diagnosis. For workshop repairs, assessment takes place after drop-off and check-in.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-10 space-y-8">
+          <form method="post" action="/api/repair-submissions" encType="multipart/form-data" onSubmit={handleSubmit} className="mt-10 space-y-8">
             <fieldset className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
               <legend className="px-2 text-2xl font-bold">Customer details</legend>
               <div className="mt-3 grid gap-6 sm:grid-cols-2">
@@ -166,7 +166,12 @@ export default function DelonghiPage() {
                 <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-sky-500" />
                 <span>I consent to Newcastle Appliance Experts using the information provided to register this De’Longhi repair and arrange service. *</span>
               </label>
-              <button type="submit" disabled={pending} className="mt-6 rounded-full bg-sky-600 px-8 py-4 font-semibold transition hover:bg-sky-500 disabled:opacity-60">{pending ? "Sending…" : "Submit Repair Registration"}</button>
+              <p className="mt-4 text-sm leading-6 text-slate-300">
+                We use the details and files you send to handle your repair. Read our{" "}
+                <Link href="/privacy-policy" className="text-sky-300 underline">Privacy Policy</Link>.
+              </p>
+              <noscript><p className="mt-3 text-sm text-amber-200">Online submission requires JavaScript. Please call us to arrange service.</p></noscript>
+              <button type="submit" disabled={!ready || pending} className="mt-6 rounded-full bg-sky-600 px-8 py-4 font-semibold transition hover:bg-sky-500 disabled:opacity-60">{pending ? "Sending…" : "Submit Repair Registration"}</button>
               {submitMessage && <p role={sent ? "status" : "alert"} className="mt-5 rounded-2xl border border-amber-400/40 bg-amber-300/10 p-4 text-sm leading-6 text-amber-100">{submitMessage}</p>}
               <p className="mt-5 text-sm text-slate-400">Prefer to call? <a href={contactDetails.phoneHref} className="text-sky-400 underline">{contactDetails.phoneDisplay}</a></p>
             </div>
@@ -179,7 +184,7 @@ export default function DelonghiPage() {
           <div className="rounded-[2rem] border border-sky-200 bg-sky-50 p-8 sm:p-12">
             <div className="text-sm font-bold uppercase tracking-[0.2em] text-sky-700">What happens next?</div>
             <h2 className="mt-4 text-4xl font-bold tracking-tight">Repair confirmation</h2>
-            <p className="mt-5 text-lg leading-8 text-slate-700">We&apos;ll email you a confirmation with your job number within a few hours during business hours, or the next business day if you register outside business hours. You don&apos;t need to wait for your job number before dropping off your appliance — once you&apos;ve sent your repair details, you&apos;re welcome to bring it in during business hours.</p>
+            <p className="mt-5 text-lg leading-8 text-slate-700">We&apos;ll email you a confirmation with your job number within a few hours during business hours, or the next business day if you register outside business hours. You don&apos;t need to wait for your job number before dropping off your appliance — once you&apos;ve sent your repair details, you&apos;re welcome to bring a workshop-suitable product in during business hours.</p>
             <p className="mt-5 rounded-2xl bg-white p-5 font-semibold leading-7 text-slate-950">Your job number is sent separately by Newcastle Appliance Experts after we receive your registration. The website does not generate it, and no appointment or phone call is required before drop-off.</p>
           </div>
         </div>
