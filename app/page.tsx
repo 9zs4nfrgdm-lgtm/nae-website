@@ -4,6 +4,13 @@ import MobileNavigation from "@/components/mobile-navigation";
 import SiteFooter from "@/components/site-footer";
 import { contactDetails, workshopDetails } from "@/lib/contact";
 import Link from "next/link";
+import Image from "next/image";
+
+const serviceBrandLogos = [
+  { name: "De’Longhi", logo: "/brand-art/delonghi-logo.webp", href: "/brands/delonghi" },
+  { name: "Kenwood", logo: "/brand-art/kenwood-logo.webp", href: "/request-a-repair#appliance-details" },
+  { name: "Braun", logo: "/brand-art/braun-logo.webp", href: "/request-a-repair#appliance-details" },
+];
 
 const services = [
   {
@@ -263,9 +270,18 @@ export default function Home() {
 
       <section className="border-y border-sky-100 bg-sky-50 py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-8">
-          <div className="inline-flex w-fit rounded-full border border-sky-200 bg-white px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-sky-700">
-            De’Longhi Authorised Service Centre
-          </div>
+          <nav aria-label="Authorised service brands" className="grid grid-cols-3 gap-2 sm:gap-3">
+            {serviceBrandLogos.map(({ name, logo, href }) => (
+              <Link
+                key={name}
+                href={href}
+                aria-label={`Enquire about a ${name} repair`}
+                className="flex h-20 min-w-0 items-center justify-center rounded-xl border border-sky-100 bg-white p-3 transition hover:border-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+              >
+                <Image src={logo} alt="" width={128} height={44} unoptimized className="max-h-9 w-auto max-w-full object-contain" />
+              </Link>
+            ))}
+          </nav>
           <div>
             <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Authorised De’Longhi repairs and servicing.</h2>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Newcastle Appliance Experts is a De’Longhi Authorised Service Centre, providing authorised repairs and servicing for De’Longhi products across Newcastle and Lake Macquarie.</p>
