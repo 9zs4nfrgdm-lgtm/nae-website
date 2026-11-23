@@ -219,6 +219,29 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-y border-sky-100 bg-sky-50 py-14">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-8">
+          <nav aria-label="Authorised service brands" className="grid grid-cols-3 gap-2 sm:gap-3">
+            {serviceBrandLogos.map(({ name, logo, href }) => (
+              <Link
+                key={name}
+                href={href}
+                aria-label={`Enquire about a ${name} repair`}
+                className="flex h-20 min-w-0 items-center justify-center rounded-xl border border-sky-100 bg-white p-3 transition hover:border-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+              >
+                <Image src={logo} alt="" width={128} height={44} unoptimized className="max-h-9 w-auto max-w-full object-contain" />
+              </Link>
+            ))}
+          </nav>
+          <div>
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Authorised De’Longhi repairs and servicing.</h2>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Newcastle Appliance Experts is a De’Longhi Authorised Service Centre, providing authorised repairs and servicing for De’Longhi products across Newcastle and Lake Macquarie.</p>
+            <p className="mt-3 max-w-3xl leading-7 text-slate-600">Submit the repair registration with any supporting documents, then drop off a workshop-suitable product during business hours without an appointment or waiting for a job number.</p>
+            <Link href="/brands/delonghi" className="mt-7 inline-block font-semibold text-sky-700 transition hover:text-sky-900">Register a De’Longhi Repair →</Link>
+          </div>
+        </div>
+      </section>
+
       <section id="services" className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -264,29 +287,6 @@ export default function Home() {
                 </a>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-sky-100 bg-sky-50 py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-8">
-          <nav aria-label="Authorised service brands" className="grid grid-cols-3 gap-2 sm:gap-3">
-            {serviceBrandLogos.map(({ name, logo, href }) => (
-              <Link
-                key={name}
-                href={href}
-                aria-label={`Enquire about a ${name} repair`}
-                className="flex h-20 min-w-0 items-center justify-center rounded-xl border border-sky-100 bg-white p-3 transition hover:border-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
-              >
-                <Image src={logo} alt="" width={128} height={44} unoptimized className="max-h-9 w-auto max-w-full object-contain" />
-              </Link>
-            ))}
-          </nav>
-          <div>
-            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Authorised De’Longhi repairs and servicing.</h2>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Newcastle Appliance Experts is a De’Longhi Authorised Service Centre, providing authorised repairs and servicing for De’Longhi products across Newcastle and Lake Macquarie.</p>
-            <p className="mt-3 max-w-3xl leading-7 text-slate-600">Submit the repair registration with any supporting documents, then drop off a workshop-suitable product during business hours without an appointment or waiting for a job number.</p>
-            <Link href="/brands/delonghi" className="mt-7 inline-block font-semibold text-sky-700 transition hover:text-sky-900">Register a De’Longhi Repair →</Link>
           </div>
         </div>
       </section>
